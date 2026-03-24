@@ -1,0 +1,17 @@
+async function upload() {
+    const fileInput = document.getElementById("resume");
+    const jobDesc = document.getElementById("jobDesc").value;
+
+    const formData = new FormData();
+    formData.append("resume", fileInput.files[0]);
+    formData.append("jobDesc", jobDesc);
+
+    const response = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+    document.getElementById("result").innerText =
+        "Match Score: " + data.score.toFixed(2) + "%";
+}
