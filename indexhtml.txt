@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Screener</title>
+</head>
+<body>
+    <h1>AI Resume Screening App</h1>
+
+    <textarea id="jobDesc" placeholder="Enter Job Description"></textarea>
+    <br><br>
+
+    <input type="file" id="resume">
+    <br><br>
+
+    <button onclick="upload()">Check Score</button>
+
+    <h2 id="result"></h2>
+
+    <script src="script.js"></script>
+</body>
+</html>
