@@ -1,0 +1,32 @@
+const express = require("express");
+const multer = require("multer");
+const cors = require("cors");
+const fs = require("fs");
+const pdfParse = require("pdf-parse");
+
+const { extractText } = require("./resumeParser");
+const { calculateScore } = require("./scorer");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const upload = multer({ dest: "uploads/" });
+
+app.post("/upload", upload.single("resume"), async (req, res) => {
+    try {
+        const filePath = req.file.path;
+        const jobDesc = req.body.jobDesc;
+
+        const resumeText = await extractText(filePath);
+        const score = calculateScore(resumeText, jobDesc);
+
+        res.json({ score });
+
+        fs.unlinkSync(filePath); // delete file after processing
+    } catch (error) {
+        res.status(500).json({ error: "Error processing file" });
+    }
+});
+
+app.listen(5000, () => console.log("Server running on port 5000"));

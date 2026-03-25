@@ -1,0 +1,17 @@
+function calculateScore(resumeText, jobDesc) {
+    const jobWords = jobDesc.toLowerCase().split(/\s+/);
+    const resume = resumeText.toLowerCase();
+
+    let matchCount = 0;
+
+    jobWords.forEach(word => {
+        if (resume.includes(word)) {
+            matchCount++;
+        }
+    });
+
+    const score = (matchCount / jobWords.length) * 100;
+    return score;
+}
+
+module.exports = { calculateScore };
